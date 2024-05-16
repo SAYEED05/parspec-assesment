@@ -3,7 +3,6 @@ import { fetchData, searchStringInObject } from "./utils";
 import ResultCard from "./Components/ResultCard";
 import Empty from "./Components/ResultCard/Empty";
 import Search from "./Components/Search";
-import useActiveElement from "./hooks/useActiveElement";
 import Loader from "./Components/Loader";
 
 function App() {
