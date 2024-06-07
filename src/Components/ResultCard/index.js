@@ -13,7 +13,8 @@ const ResultCard = ({
   toHighlight,
 }) => {
   const focusedElement = useActiveElement();
-  const handleKeyUpList = (e, index, length) => {
+
+  const handleKeyUpList = (e) => {
     setToHighlight("KEY");
     const isDownArrow = e.keyCode === 40;
     const isUpArrow = e.keyCode === 38;
@@ -34,30 +35,26 @@ const ResultCard = ({
     }
   };
 
-  const handleMouseEnter = (e, index) => {
-    console.log(e, "esssss");
+  const handleMouseEnter = (e) => {
     if (toHighlight === "MOUSE") {
       e.target.focus();
       setHoverIndex(index);
     }
     setToHighlight("MOUSE");
   };
-  const handleMouseLeave = (e) => {
-    setHoverIndex(-1);
-  };
 
   //use Package like dompurify to sanitize before passing value to dangerouslySetInnerHTML
   return (
     <li
       key={content.id}
-      onKeyUp={(e) => handleKeyUpList(e, index, length)}
+      onKeyUp={(e) => handleKeyUpList(e)}
       tabIndex={0}
       id={`li__${index}`}
       className={`li__result__card ${
         focusedElement.id === `li__${index}` ? "card__focus" : ""
       }`}
-      onMouseEnter={(e) => handleMouseEnter(e, index)}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={(e) => handleMouseEnter(e)}
+      onMouseLeave={() => setHoverIndex(-1)}
     >
       <div value={content.id}>
         <div

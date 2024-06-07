@@ -20,7 +20,7 @@ function App() {
     if (!data.length || !query) return [];
 
     const _combinedData = data.map((item) => {
-      const searchData = searchStringInObject(item, query);
+      const searchData = searchStringInObject(item, query); //this basically returns if the searched string is there and if so in which property it is found
       return {
         ...item,
         ...searchData,
@@ -30,8 +30,6 @@ function App() {
 
     return filtered;
   }, [data, query]);
-
-  console.log(toHighlight, "toHighlight");
 
   useEffect(() => {
     window.addEventListener("mousemove", () => setToHighlight("MOUSE"));
