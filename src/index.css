@@ -35,10 +35,12 @@
   padding: 20px;
   cursor: pointer;
 }
-.li__result__card:focus,
-.li__result__card:hover {
+.li__result__card:focus {
   background-color: #fffadc;
 }
+/* .card__focus {
+  background-color: #fffadc;
+} */
 
 .no__result {
   padding: 20px;

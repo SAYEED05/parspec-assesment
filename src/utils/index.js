@@ -65,7 +65,7 @@ const fetchData = async ({ setLoading, setData }) => {
 };
 
 const handleScrollIntoView = (element) => {
-  element.focus();
+  element?.focus();
   element.scrollIntoView({ behavior: "smooth", block: "center" });
   return;
 };

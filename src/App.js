@@ -11,6 +11,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [hoverIndex, setHoverIndex] = useState(-1);
+  const [toHighlight, setToHighlight] = useState(null);
   useEffect(() => {
     fetchData({ setLoading, setData });
   }, []);
@@ -29,6 +30,12 @@ function App() {
 
     return filtered;
   }, [data, query]);
+
+  console.log(toHighlight, "toHighlight");
+
+  useEffect(() => {
+    window.addEventListener("mousemove", () => setToHighlight("MOUSE"));
+  }, []);
 
   if (loading) return <Loader />;
 
@@ -52,6 +59,8 @@ function App() {
                       query={query}
                       hoverIndex={hoverIndex}
                       setHoverIndex={setHoverIndex}
+                      setToHighlight={setToHighlight}
+                      toHighlight={toHighlight}
                     />
                   );
                 })}

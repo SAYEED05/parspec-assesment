@@ -1,5 +1,6 @@
 import React from "react";
 import { handleScrollIntoView, highlightText } from "../../utils";
+import useActiveElement from "../../hooks/useActiveElement";
 
 const ResultCard = ({
   content,
@@ -8,38 +9,38 @@ const ResultCard = ({
   length,
   hoverIndex,
   setHoverIndex,
+  setToHighlight,
+  toHighlight,
 }) => {
+  const focusedElement = useActiveElement();
   const handleKeyUpList = (e, index, length) => {
-    //DOWN ARROW
-    if (e.keyCode === 40) {
-      if (index < length - 1) {
-        if (hoverIndex !== -1) {
-          let element = document.getElementById(`li__${hoverIndex + 1}`);
-          handleScrollIntoView(element);
-          return;
-        }
-        let element = document.getElementById(`li__${index + 1}`);
-        handleScrollIntoView(element);
+    setToHighlight("KEY");
+    const isDownArrow = e.keyCode === 40;
+    const isUpArrow = e.keyCode === 38;
+
+    if (isDownArrow || isUpArrow) {
+      let newIndex = isDownArrow ? index + 1 : index - 1;
+
+      if (hoverIndex !== -1 && toHighlight !== "KEY") {
+        newIndex = isDownArrow ? hoverIndex + 1 : hoverIndex - 1;
       }
-    }
-    //UP ARROW
-    if (e.keyCode === 38) {
-      if (index > 0) {
-        if (hoverIndex !== -1) {
-          let element = document.getElementById(`li__${hoverIndex - 1}`);
-          handleScrollIntoView(element);
-          return;
-        }
-        let element = document.getElementById(`li__${index - 1}`);
+
+      if (newIndex >= 0 && newIndex < length) {
+        const element = document.getElementById(`li__${newIndex}`);
         handleScrollIntoView(element);
-      } else {
-        document.getElementById(`search__input`).focus();
+      } else if (isUpArrow && newIndex < 0) {
+        document.getElementById("search__input")?.focus();
       }
     }
   };
 
   const handleMouseEnter = (e, index) => {
-    setHoverIndex(index);
+    console.log(e, "esssss");
+    if (toHighlight === "MOUSE") {
+      e.target.focus();
+      setHoverIndex(index);
+    }
+    setToHighlight("MOUSE");
   };
   const handleMouseLeave = (e) => {
     setHoverIndex(-1);
@@ -52,7 +53,9 @@ const ResultCard = ({
       onKeyUp={(e) => handleKeyUpList(e, index, length)}
       tabIndex={0}
       id={`li__${index}`}
-      className="li__result__card"
+      className={`li__result__card ${
+        focusedElement.id === `li__${index}` ? "card__focus" : ""
+      }`}
       onMouseEnter={(e) => handleMouseEnter(e, index)}
       onMouseLeave={handleMouseLeave}
     >
