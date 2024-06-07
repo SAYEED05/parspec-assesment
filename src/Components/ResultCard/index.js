@@ -9,20 +9,20 @@ const ResultCard = ({
   length,
   hoverIndex,
   setHoverIndex,
-  setToHighlight,
-  toHighlight,
+  setSelectedUsing,
+  selectedUsing,
 }) => {
   const focusedElement = useActiveElement();
 
   const handleKeyUpList = (e) => {
-    setToHighlight("KEY");
+    setSelectedUsing("KEY");
     const isDownArrow = e.keyCode === 40;
     const isUpArrow = e.keyCode === 38;
 
     if (isDownArrow || isUpArrow) {
       let newIndex = isDownArrow ? index + 1 : index - 1;
 
-      if (hoverIndex !== -1 && toHighlight !== "KEY") {
+      if (hoverIndex !== -1 && selectedUsing !== "KEY") {
         newIndex = isDownArrow ? hoverIndex + 1 : hoverIndex - 1;
       }
 
@@ -36,11 +36,11 @@ const ResultCard = ({
   };
 
   const handleMouseEnter = (e) => {
-    if (toHighlight === "MOUSE") {
+    if (selectedUsing === "MOUSE") {
       e.target.focus();
       setHoverIndex(index);
     }
-    setToHighlight("MOUSE");
+    setSelectedUsing("MOUSE");
   };
 
   //use Package like dompurify to sanitize before passing value to dangerouslySetInnerHTML
